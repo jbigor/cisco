@@ -1,0 +1,420 @@
+version 12.2
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+service internal
+service sequence-numbers
+service unsupported-transceiver
+no service dhcp
+!
+hostname essp-kursk-ceh2960s
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 51200
+logging console critical
+!
+username root privilege 15 secret 5 $1$8Xcg$RVMG7uLaUH0y.7KehSseY1
+!
+!
+aaa new-model
+!
+!
+aaa authorization exec default local
+!
+!
+!
+aaa session-id common
+clock timezone MSK 3
+switch 1 provision ws-c2960s-24ps-l
+no ip source-route
+ip dhcp test relay stateless
+!
+!
+no ip domain-lookup
+ip domain-name essp.ru
+!
+password encryption aes
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree loopguard default
+spanning-tree logging
+spanning-tree extend system-id
+spanning-tree uplinkfast
+spanning-tree backbonefast
+!
+!
+!
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause security-violation
+errdisable recovery cause pagp-flap
+errdisable recovery cause dtp-flap
+errdisable recovery cause link-flap
+errdisable recovery cause sfp-config-mismatch
+errdisable recovery cause gbic-invalid
+errdisable recovery cause psecure-violation
+errdisable recovery cause port-mode-failure
+errdisable recovery cause dhcp-rate-limit
+errdisable recovery cause mac-limit
+errdisable recovery cause vmps
+errdisable recovery cause storm-control
+errdisable recovery cause inline-power
+errdisable recovery cause arp-inspection
+errdisable recovery cause loopback
+errdisable recovery cause small-frame
+errdisable recovery interval 30
+!
+vlan internal allocation policy ascending
+!
+ip ssh logging events
+ip ssh version 2
+ip scp server enable
+lldp run
+!
+!
+interface Null0
+ no ip unreachables
+!
+interface Port-channel1
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/2
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/3
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/4
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/5
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/6
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/7
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/8
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/9
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/10
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/11
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/12
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/13
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/14
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ speed 100
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/15
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/16
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/17
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/18
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ speed 100
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/19
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/20
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/21
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/22
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/23
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/24
+ description workstation
+ switchport access vlan 50
+ switchport trunk native vlan 50
+ switchport trunk allowed vlan 50
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ spanning-tree portfast trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/25
+ description ceh-office
+ switchport trunk native vlan 10
+ switchport mode trunk
+ spanning-tree bpdufilter disable
+ spanning-tree bpduguard disable
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+!
+interface GigabitEthernet1/0/28
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 192.168.30.3 255.255.255.0
+!
+interface Vlan50
+ ip address 192.168.10.9 255.255.255.0
+!
+ip default-gateway 192.168.10.1
+no ip http server
+no ip http secure-server
+ip sla enable reaction-alerts
+!
+line con 0
+ exec-timeout 0 0
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ transport input telnet ssh
+!
+end
