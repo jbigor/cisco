@@ -1,0 +1,695 @@
+version 15.0
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+service internal
+service sequence-numbers
+!
+hostname 2821r0-essp
+!
+boot-start-marker
+boot-end-marker
+!
+security authentication failure rate 2 log
+security passwords min-length 10
+logging userinfo
+logging buffered 51200
+logging reload debugging
+logging console emergencies
+no logging monitor
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authentication ppp default local
+aaa authorization exec default local 
+aaa authorization network default local 
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!
+clock timezone MSK 3
+clock summer-time MSD recurring last Sun Mar 2:00 last Sun Oct 2:00
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause rootguard
+errdisable recovery cause pagp-flap
+errdisable recovery cause dtp-flap
+errdisable recovery cause link-flap
+errdisable recovery interval 30
+!
+no dot11 syslog
+no ip source-route
+ip arp proxy disable
+!
+!
+ip cef
+!
+!         
+ip vrf internet1
+ rd 1:1
+!
+ip vrf internet2
+ rd 1:2
+!
+ip vrf internet3
+ rd 1:3
+!
+ip vrf intranet1
+ rd 10:1
+ route-target export 10:1
+ route-target import 10:1
+!
+ip domain retry 0
+ip domain timeout 1
+no ip domain lookup
+ip domain name essp.ru
+ip inspect WAAS flush-timeout 10
+login delay 10
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+password encryption aes
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+crypto pki trustpoint r0
+ enrollment selfsigned
+ serial-number
+ revocation-check crl
+ rsakeypair r0-self 1024 1024
+!
+!
+crypto pki certificate chain r0
+ certificate self-signed 02
+  30820259 308201C2 A0030201 02020102 300D0609 2A864886 F70D0101 04050030 
+  38313630 12060355 0405130B 46435A31 35303437 37553730 2006092A 864886F7 
+  0D010902 16133238 32317230 2D657373 702E6573 73702E72 75301E17 0D313230 
+  35323331 33353932 335A170D 32303031 30313030 30303030 5A303831 36301206 
+  03550405 130B4643 5A313530 34373755 37302006 092A8648 86F70D01 09021613 
+  32383231 72302D65 7373702E 65737370 2E727530 819F300D 06092A86 4886F70D 
+  01010105 0003818D 00308189 02818100 CC35DFC4 10961F82 B0C60920 1D2C90EA 
+  F745A2B9 4105ADDC 4D093A8B FB957878 2F89AD3D 27D62872 5E73C62F 2950F1AF 
+  2F6F4B15 CEC410CE F133C599 CB543B51 BA8F3242 E9EECA80 B759AF12 5B7794A6 
+  398C06A0 6A655E08 1A610E45 F71F4D14 AB0DFEFB 1BBDD603 296D6379 26C332AE 
+  B6E667E4 76989151 92124F59 5934075F 02030100 01A37330 71300F06 03551D13 
+  0101FF04 05300301 01FF301E 0603551D 11041730 15821332 38323172 302D6573 
+  73702E65 7373702E 7275301F 0603551D 23041830 1680143B 85BA7268 F413B993 
+  DD559FD1 2CCC2369 30DF4730 1D060355 1D0E0416 04143B85 BA7268F4 13B993DD 
+  559FD12C CC236930 DF47300D 06092A86 4886F70D 01010405 00038181 00187304 
+  719BB332 744B93F3 1952A626 E091FFF2 57D1F161 8E192511 2D503004 86194CF4 
+  8C9438A1 5F7826C1 C72C503D F20100CC D0ADEA9D DE335BB0 7B9281CB B554915E 
+  BD6CFA0D A0565761 074B7EE5 1BE30AA0 4D53ECE9 16E1C051 89EE1111 78439685 
+  7B6BE783 E70EA27E 9416BB9D ABFD761E 63AC3447 FDCE8AFB 2E3E0349 C0
+  	quit
+!
+!
+license udi pid CISCO2821 sn FCZ150477U7
+object-group network rfc1918 
+ 10.0.0.0 255.0.0.0
+ 172.16.0.0 255.240.0.0
+ 192.168.0.0 255.255.0.0
+!
+object-group network rfc3330 
+ 0.0.0.0 255.0.0.0
+ 10.0.0.0 255.0.0.0
+ 14.0.0.0 255.0.0.0
+ 24.0.0.0 255.0.0.0
+ 39.0.0.0 255.0.0.0
+ 127.0.0.0 255.0.0.0
+ 128.0.0.0 255.255.0.0
+ 169.254.0.0 255.255.0.0
+ 172.16.0.0 255.240.0.0
+ 191.255.0.0 255.255.0.0
+ 192.0.0.0 255.255.255.0
+ 192.0.2.0 255.255.255.0
+ 192.88.99.0 255.255.255.0
+ 192.168.0.0 255.255.0.0
+ 198.18.0.0 255.254.0.0
+ 223.255.255.0 255.255.255.0
+ 224.0.0.0 240.0.0.0
+ 240.0.0.0 240.0.0.0
+!
+object-group network vlan201_addr 
+ host 213.171.43.206
+!
+object-group network vlan202_addr 
+ host 83.136.235.38
+!
+!
+spanning-tree uplinkfast
+spanning-tree backbonefast
+username xxx privilege 15 secret 5 $1$iNDH$cCCPAlvZCcvPvUzcLw7do/
+!
+redundancy
+no crypto engine software ipsec
+!
+!
+ip ftp source-interface Loopback0
+ip tftp source-interface Loopback0
+ip ssh maxstartups 2
+ip ssh source-interface Loopback0
+ip ssh logging events
+ip ssh version 2
+ip scp server enable
+!
+track 1 list boolean or
+ object 201
+!
+track 2 list boolean or
+ object 202
+!
+track 3 list boolean or
+ object 203
+!         
+track 201 ip sla 201
+!
+track 202 ip sla 202
+!
+track 203 ip sla 203
+! 
+crypto keyring internet1 vrf internet1
+  pre-shared-key address 0.0.0.0 0.0.0.0 key 6 ffTXFgC`ObE_ZWD\JMYUSPaaQA_QR]eMeQJLMDAMYFXTPeaSVSfNLhPChED`UZQ[DBedB
+crypto keyring jun vrf internet1
+  pre-shared-key address 109.x.x.x 255.255.255.0 key 6 OZggYSZXIbH\BVZIQGLMDIaPeBDX^cVAIMBGJebdUeDT`NDZAAB
+crypto logging session
+crypto logging ezvpn
+!
+crypto isakmp policy 8
+ encr aes
+ authentication pre-share
+ group 2
+crypto isakmp invalid-spi-recovery
+!
+crypto isakmp client configuration group ezvpn
+ key 6 gCLPAO\JFJW_ZBY\TSeOVDTJ]RSQRIMHiRCN
+ dns 8.8.8.8
+ domain essp.ru
+ pool ezvpn
+ acl ezvpn
+ smartcard-removal-disconnect
+ save-password
+ firewall are-u-there
+ include-local-lan
+ pfs
+ netmask 255.255.0.0
+ browser-proxy AUTO
+!
+crypto isakmp client configuration browser-proxy AUTO
+ proxy auto-detect
+crypto isakmp profile ezvpn
+   match identity group ezvpn
+   client authentication list default
+   isakmp authorization list default
+   client configuration address initiate
+   client configuration address respond
+   client configuration group ezvpn
+   virtual-template 12
+crypto isakmp profile ezvpn2
+   match identity group ezvpn
+   client authentication list default
+   isakmp authorization list default
+   client configuration address initiate
+   client configuration address respond
+   client configuration group ezvpn
+   virtual-template 112
+crypto isakmp profile internet1
+   vrf internet1
+   keyring internet1
+   match identity address 0.0.0.0 internet1
+crypto isakmp profile jun
+   vrf internet1
+   keyring jun
+   self-identity address
+   match identity address 109.x.x.x 255.255.255.0 internet1
+!         
+!
+crypto ipsec transform-set esp-3des-sha esp-3des esp-sha-hmac 
+crypto ipsec transform-set esp-aes_256_esp-sha-hmac_ah-sha-hmac_comp-lzs ah-sha-hmac esp-aes 256 esp-sha-hmac comp-lzs 
+crypto ipsec transform-set esp-aes_256_esp-sha-hmac esp-aes 256 esp-sha-hmac 
+crypto ipsec transform-set esp-aes_256_esp-sha-hmac_transport esp-aes 256 esp-sha-hmac 
+ mode transport require
+crypto ipsec transform-set esp-aes_256_esp-sha-hmac_ah-sha-hmac_comp-lzs_transport ah-sha-hmac esp-aes 256 esp-sha-hmac comp-lzs 
+ mode transport require
+crypto ipsec transform-set esp-aes_128_esp-sha-hmac_ah-sha-hmac_comp-lzs ah-sha-hmac esp-aes esp-sha-hmac comp-lzs 
+crypto ipsec transform-set esp-aes_128_esp-sha-hmac esp-aes esp-sha-hmac 
+crypto ipsec transform-set esp-aes_128_esp-sha-hmac_ah-sha-hmac_comp-lzs_transport ah-sha-hmac esp-aes esp-sha-hmac comp-lzs 
+ mode transport require
+crypto ipsec transform-set esp-aes_128_esp-sha-hmac_transport esp-aes esp-sha-hmac 
+ mode transport require
+!
+crypto ipsec profile ezvpn
+ set transform-set esp-aes_128_esp-sha-hmac 
+ set pfs group2
+ set isakmp-profile ezvpn
+!
+crypto ipsec profile ezvpn2
+ set transform-set esp-aes_128_esp-sha-hmac 
+ set pfs group2
+ set isakmp-profile ezvpn2
+!
+crypto ipsec profile internet1
+ set transform-set esp-aes_128_esp-sha-hmac_transport 
+ set pfs group2
+ set isakmp-profile internet1
+!
+crypto ipsec profile jun
+ set transform-set esp-aes_128_esp-sha-hmac 
+ set pfs group2
+ set isakmp-profile jun
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip vrf forwarding intranet1
+ ip address 10.0.0.1 255.255.255.255
+ !
+!
+interface Loopback1
+ no ip address
+ !
+!
+interface Loopback12
+ ip vrf forwarding intranet1
+ ip address 192.168.50.1 255.255.255.0
+ !
+!
+interface Loopback2147483647
+ ip address 192.168.0.1 255.255.255.255
+ !
+!
+interface Tunnel1090
+ ip vrf forwarding intranet1
+ ip address 10.33.0.1 255.255.255.0
+ no ip redirects
+ ip mtu 1400
+ ip nhrp authentication h7J3282Z
+ ip nhrp map multicast dynamic
+ ip nhrp network-id 33
+ ip nhrp holdtime 300
+ ip nhrp server-only
+ ip nhrp registration no-unique
+ ip virtual-reassembly
+ ip tcp adjust-mss 1360
+ tunnel source Port-channel1.201
+ tunnel mode gre multipoint
+ tunnel route-via Port-channel1.201 mandatory
+ tunnel vrf internet1
+ tunnel protection ipsec profile internet1 shared
+ !
+!
+interface Port-channel1
+ no ip address
+ !
+ hold-queue 150 in
+!
+interface Port-channel1.10
+ description management
+ encapsulation dot1Q 10 native
+ ip vrf forwarding intranet1
+ ip address 192.168.20.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+interface Port-channel1.20
+!
+interface Port-channel1.50
+ encapsulation dot1Q 50
+ ip vrf forwarding intranet1
+ ip address 192.168.2.253 255.255.255.0 secondary
+ ip address 192.168.7.2 255.255.255.0 secondary
+ ip address 192.168.5.1 255.255.255.0 secondary
+ ip address 192.168.3.1 255.255.255.0 secondary
+ ip address 192.168.1.253 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+ rate-limit input access-group 151 2048000 384000 768000 conform-action transmit exceed-action drop
+ rate-limit output access-group 151 2048000 384000 768000 conform-action transmit exceed-action drop
+!
+interface Port-channel1.201
+ description comcor
+ encapsulation dot1Q 201
+ ip vrf forwarding internet1
+ ip address 213.x.x.x 255.255.255.248
+ ip nat outside
+ ip virtual-reassembly max-reassemblies 256
+!
+interface Port-channel1.202
+ description outside-2
+ encapsulation dot1Q 202
+ ip vrf forwarding internet2
+ ip address 31.x.x.x 255.255.255.128
+ ip nat outside
+ ip virtual-reassembly max-reassemblies 256
+!
+interface Port-channel1.203
+ description inet3
+ encapsulation dot1Q 203
+ ip vrf forwarding internet3
+ ip address 81.x.x.x 255.255.255.248
+ ip nat outside
+ ip virtual-reassembly max-reassemblies 256
+!
+interface Port-channel1.20444
+!
+interface GigabitEthernet0/0
+ no ip address
+ ip flow ingress
+ duplex auto
+ speed auto
+ channel-group 1
+ !
+!
+interface GigabitEthernet0/1
+ no ip address
+ ip flow ingress
+ duplex auto
+ speed auto
+ channel-group 1
+ !
+!
+interface Virtual-Template12 type tunnel
+ ip vrf forwarding intranet1
+ ip unnumbered Loopback12
+ ip nat inside
+ ip virtual-reassembly
+ ip tcp adjust-mss 1000
+ tunnel mode ipsec ipv4
+ tunnel vrf internet1
+ tunnel protection ipsec profile ezvpn shared
+ !
+!
+interface Virtual-Template112 type tunnel
+ ip vrf forwarding intranet1
+ ip unnumbered Loopback12
+ ip nat inside
+ ip virtual-reassembly
+ ip tcp adjust-mss 1000
+ tunnel mode ipsec ipv4
+ tunnel vrf internet2
+ tunnel protection ipsec profile ezvpn2 shared
+ !
+!
+router bgp 65001
+ no synchronization
+ bgp router-id 10.33.0.1
+ bgp router-id vrf auto-assign
+ bgp log-neighbor-changes
+ timers bgp 10 30
+ no auto-summary
+ !
+ address-family ipv4 vrf intranet1
+  no synchronization
+  aggregate-address 192.168.0.0 255.255.0.0 summary-only
+  redistribute connected route-map redistribute-rfc1918
+  redistribute static route-map redistribute-rfc1918
+  neighbor AS65010 peer-group
+  neighbor AS65010 remote-as 65010
+  neighbor AS65010 fall-over
+  neighbor AS65010 next-hop-self
+  neighbor AS65010 default-originate
+  neighbor AS65010 weight 256
+  neighbor AS65010 route-map redistribute-rfc1918 in
+  neighbor 10.33.0.10 peer-group AS65010
+  neighbor 10.33.0.10 activate
+  neighbor 10.33.0.10 weight 256
+ exit-address-family
+!
+ip local pool ezvpn 192.168.50.10 192.168.50.254 recycle delay 10 cache-size 100
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+no ip nat service nbar
+ip nat service port-randomization
+ip nat pool ftppool 192.168.2.26 192.168.2.26 netmask 255.255.255.0 type rotary
+ip nat inside source route-map nat-1 interface Port-channel1.201 vrf intranet1 overload
+ip nat inside source route-map nat-2 interface Port-channel1.202 vrf intranet1 overload
+ip nat inside source route-map nat-3 interface Port-channel1.203 vrf intranet1 overload
+ip nat inside source static tcp 192.168.1.51 3389 x.171.43.206 3390 vrf intranet1 extendable
+ip nat inside source static tcp 192.168.1.51 88 x.x.43.206 8080 vrf intranet1 extendable
+ip nat inside destination list 101 pool ftppool
+ip route vrf intranet1 0.0.0.0 0.0.0.0 Port-channel1.203 x.x.x.129 track 1
+ip route vrf intranet1 0.0.0.0 0.0.0.0 Port-channel1.202 x.x.x.129 2 track 2
+ip route vrf intranet1 0.0.0.0 0.0.0.0 Port-channel1.201 x.x.x.201 3 track 3
+ip route vrf internet1 0.0.0.0 0.0.0.0 x.x.x.201
+ip route vrf internet2 0.0.0.0 0.0.0.0 x.x.x.129
+ip route vrf internet3 0.0.0.0 0.0.0.0 x.x.x.225
+ip route vrf internet3 0.0.0.0 0.0.0.0 x.x.x.129
+ip route vrf intranet1 0.0.0.0 0.0.0.0 Port-channel1.201 x.x.x.201 251
+ip route vrf intranet1 0.0.0.0 0.0.0.0 Port-channel1.202 x.x.x.129 252
+ip route vrf intranet1 0.0.0.0 0.0.0.0 Port-channel1.203 x.x.x.129 253
+!
+ip access-list standard redistribute-rfc1918
+ permit 10.0.0.0 0.255.255.255
+ permit 172.16.0.0 0.15.255.255
+ permit 192.168.0.0 0.0.255.255
+ deny   any
+!
+ip access-list extended ag-acl-in-201
+ deny   ip object-group rfc3330 any
+ permit icmp any host 213.x.x.x
+ permit esp any host 213.x.x.x
+ permit ahp any host 213.x.x.x
+ permit pcp any host 213.x.x.x
+ permit udp any host 213.x.x.x eq isakmp non500-isakmp
+ permit tcp any host 213.x.x.x eq 22 www
+ permit tcp any host 213.x.x.x range exec 65535
+ permit udp any host 213.x.x.x range biff 65535
+ deny   ip any any
+ip access-list extended ag-acl-in-202
+ deny   ip object-group rfc3330 any
+ permit icmp any host x.x.203.150
+ permit esp any host x.x.203.150
+ permit ahp any host x.x.203.150
+ permit pcp any host x.x.203.150
+ permit udp any host x.x.203.150 eq isakmp non500-isakmp
+ permit tcp any host x.x.203.150 eq 22
+ permit tcp any host x.x.203.150 range exec 65535
+ permit udp any host x.x.203.150 range biff 65535
+ip access-list extended ag-acl-in-203
+ deny   ip object-group rfc3330 any
+ permit icmp any host x.x.114.228
+ permit esp any host x.x.114.228
+ permit ahp any host x.x.114.228
+ permit pcp any host x.x.114.228
+ permit udp any host x.x.114.228 eq isakmp non500-isakmp
+ permit tcp any host x.x.114.228 eq 22
+ permit tcp any host x.x.114.228 range exec 65535
+ permit udp any host x.x.114.228 range biff 65535
+ deny   ip any any
+ permit icmp any host x.x.144.130
+ permit esp any host x.x.144.130
+ permit ahp any host x.x.144.130
+ permit pcp any host x.x.144.130
+ permit udp any host x.x.144.130 eq isakmp non500-isakmp
+ permit tcp any host x.x.144.130 eq 22
+ permit tcp any host x.x.144.130 range exec 65535
+ permit udp any host x.x.144.130 range biff 65535
+ip access-list extended ag-acl-out-201
+ deny   ip any object-group rfc3330
+ permit icmp host x.x.43.206 any
+ permit esp host x.x.43.206 any
+ permit ahp host x.x.43.206 any
+ permit pcp host x.x.43.206 any
+ permit udp host x.x.43.206 eq isakmp non500-isakmp any
+ permit tcp host x.x.43.206 eq 22 any
+ permit tcp host x.x.43.206 range exec 65535 any
+ permit udp host x.x.43.206 range biff 65535 any
+ deny   ip any any
+ip access-list extended ag-acl-out-202
+ deny   ip any object-group rfc3330
+ permit icmp host x.x.203.150 any
+ permit esp host x.x.203.150 any
+ permit ahp host x.x.203.150 any
+ permit pcp host x.x.203.150 any
+ permit udp host x.x.203.150 eq isakmp non500-isakmp any
+ permit tcp host x.x.203.150 eq 22 any
+ permit tcp host x.x.203.150 range exec 65535 any
+ permit udp host x.x.203.150 range biff 65535 any
+ deny   ip any any
+ip access-list extended ag-acl-out-203
+ deny   ip any object-group rfc3330
+ permit icmp host x.x.114.228 any
+ permit esp host x.x.114.228 any
+ permit ahp host x.x.114.228 any
+ permit pcp host x.x.114.228 any
+ permit udp host x.x.114.228 eq isakmp non500-isakmp any
+ permit tcp host x.x.114.228 eq 22 any
+ permit tcp host x.x.114.228 range exec 65535 any
+ permit udp host x.x.114.228 range biff 65535 any
+ deny   ip any any
+ permit icmp host x.x.144.130 any
+ permit esp host x.x.144.130 any
+ permit ahp host x.x.144.130 any
+ permit pcp host x.x.144.130 any
+ permit udp host x.x.144.130 eq isakmp non500-isakmp any
+ permit tcp host x.x.144.130 eq 22 any
+ permit tcp host x.x.144.130 range exec 65535 any
+ permit udp host x.x.144.130 range biff 65535 any
+ip access-list extended ezvpn
+ permit ip 192.168.0.0 0.0.255.255 any
+ip access-list extended to_nat
+ deny   ip any object-group rfc3330
+ permit ip object-group rfc1918 any
+ deny   ip any any
+!
+ip sla 201
+ icmp-echo x.x.x.3 source-interface Port-channel1.201
+ timeout 10000
+ threshold 10000
+ vrf internet1
+ frequency 10
+ip sla schedule 201 life forever start-time now
+ip sla 202
+ icmp-echo x.x.x.3 source-interface Port-channel1.202
+ timeout 10000
+ threshold 10000
+ vrf internet2
+ frequency 10
+ip sla schedule 202 life forever start-time now
+ip sla 203
+ icmp-echo x.x.x.3 source-interface Port-channel1.203
+ timeout 10000
+ threshold 10000
+ vrf internet3
+ frequency 10
+ip sla schedule 203 life forever start-time now
+ip sla 999
+ path-jitter 10.0.0.10 source-ip 10.0.0.1
+ vrf intranet1
+ip sla schedule 999 life forever start-time now
+access-list 101 permit tcp any any range 63201 63250
+access-list 120 permit ip host 10.66.66.66 host 10.66.66.88
+access-list 151 permit ip host 192.168.1.151 any
+access-list 151 permit ip any host 192.168.1.151
+!
+!
+!
+!
+route-map redistribute-metric-peer-9 permit 10
+ set metric +9
+!
+route-map redistribute-metric-peer-8 permit 10
+ set metric +8
+!
+route-map redistribute-metric-peer-3 permit 10
+ set metric +3
+!
+route-map redistribute-metric-peer-2 permit 10
+ set metric +2
+!
+route-map redistribute-metric-peer-1 permit 10
+ set metric +1
+!
+route-map redistribute-metric-peer-7 permit 10
+ set metric +7
+!
+route-map redistribute-D-X deny 10
+ match ip address prefix-list redistribute-D
+!
+route-map redistribute-D-X permit 20
+!
+route-map redistribute-metric-peer-6 permit 10
+ set metric +6
+!
+route-map redistribute-metric-peer-5 permit 10
+ set metric +5
+!
+route-map redistribute-metric-peer-4 permit 10
+ set metric +4
+!
+route-map redistribute-metric-peer-12 permit 10
+ set metric +12
+!
+route-map redistribute-metric-peer-13 permit 10
+ set metric +13
+!
+route-map redistribute-metric-peer-10 permit 10
+ set metric +10
+!
+route-map redistribute-metric-peer-11 permit 10
+ set metric +11
+!
+route-map redistribute-metric-peer-16 permit 10
+ set metric +16
+!         
+route-map redistribute-metric-peer-14 permit 10
+ set metric +14
+!
+route-map redistribute-metric-peer-15 permit 10
+ set metric +15
+!
+route-map redistribute-rfc1918 permit 10
+ match ip address redistribute-rfc1918
+!
+route-map redistribute-any permit 10
+ match ip address redistribute-any
+!
+route-map nat-2 permit 10
+ match ip address to_nat
+ match interface Port-channel1.202
+!
+route-map nat-3 permit 10
+ match ip address to_nat
+ match interface Port-channel1.203
+!
+route-map nat-1 permit 10
+ match ip address to_nat
+ match interface Port-channel1.201
+!
+route-map outside permit 65501
+ match ip address thr201
+!
+snmp-server community ESSP RO
+!
+!
+control-plane
+ !
+!
+!
+!
+!
+!
+!
+!
+alias exec vsh tclsh flash:dk6.tcl
+alias exec scpu show proc cpu | e 0.00
+alias exec hcpu show proc cpu his
+alias exec ipr sh ip route vrf intranet1
+alias exec iprb sh ip bgp vpnv4 vrf intranet1
+!
+line con 0
+ exec-timeout 0 0
+line aux 0
+line vty 0 4
+ exec-timeout 0 0
+ privilege level 15
+ transport input telnet ssh
+!
+scheduler allocate 20000 1000
+end
