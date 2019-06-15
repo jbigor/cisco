@@ -72,7 +72,7 @@ ip vrf intranet1
 ip domain retry 0
 ip domain timeout 1
 no ip domain lookup
-ip domain name essp.ru
+ip domain name xxx.ru
 ip inspect WAAS flush-timeout 10
 login delay 10
 no ipv6 cef
@@ -150,10 +150,10 @@ object-group network rfc3330
  240.0.0.0 240.0.0.0
 !
 object-group network vlan201_addr 
- host 213.171.43.206
+ host x.171.43.206
 !
 object-group network vlan202_addr 
- host 83.136.235.38
+ host x.136.235.38
 !
 !
 spanning-tree uplinkfast
